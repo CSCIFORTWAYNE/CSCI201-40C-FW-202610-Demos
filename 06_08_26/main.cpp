@@ -19,7 +19,7 @@ public:
 int main()
 {
     car c;
-    c.make = "honda";
+    // c.make = "honda";
     std::cout << "hello world" << std::endl;
     return 0;
 }
