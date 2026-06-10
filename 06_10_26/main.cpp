@@ -23,6 +23,8 @@ void myFunc(ClockType &theClock);
 
 int main()
 {
+    int nums[50];
+    // ClockType clocks[50];
     ClockType c(0, 0, 0);
     for (int i = 0; i < rand() % 20 + 1; i++)
     {
