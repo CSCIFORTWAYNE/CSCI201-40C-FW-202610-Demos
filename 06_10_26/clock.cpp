@@ -37,3 +37,13 @@ void ClockType::incrementHours()
 {
     hr = ++hr % 24;
 }
+
+void ClockType::incrementMinutes()
+{
+    min = ++min % 60;
+}
+
+ClockType::ClockType(int h, int m, int s) //: hr(h), min(m), sec(s) initializes the members to the parameters. Shouldn't be used if the data needs validated
+{
+    setTime(h, m, s);
+}
