@@ -67,7 +67,7 @@ std::string ClockType::printTime() const
         }
         // out << " " << partToStr[static_cast<int>(partOfDay)];
     }
-    return std::string();
+    return out.str();
 }
 
 void ClockType::incrementSeconds()
