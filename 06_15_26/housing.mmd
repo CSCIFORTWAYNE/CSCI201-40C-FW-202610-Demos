@@ -1,0 +1,36 @@
+classDiagram
+    ResidentalUnit <|-- Apartment
+    ResidentalUnit <|-- House
+    ResidentalUnit <|-- Condo
+    class ResidentalUnit{
+        -sqft: int
+        -noBed:int
+        -noBath: int
+        -available: bool
+        +ResidentalUnit(int, int, int)
+        +setSqft(int) void
+        +setNoBed(int) void
+        +setNoBath(int) void
+        +getSqft() int <<const>> 
+        +getNoBed() int
+        +getNoBath() int
+        +forSale(): void
+    }
+    class Apartment{
+        -landlord: string 
+        -rent: double
+        -utilities: bool
+        -unitNumber: string
+        -leaseTerm: int
+    }
+    class House{
+        -propertySize:double
+        -price: double
+        -taxes: double
+        -HOAFees: double
+
+    }
+    class Condo{
+        -condoFee: double
+        -unitNumber: string
+    }
