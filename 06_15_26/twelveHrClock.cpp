@@ -29,6 +29,20 @@ void TwelveHrClock::setTime(int hour, int minute, int second)
     Clock::setTime(hour, minute, second);
 }
 
+TwelveHrClock::TwelveHrClock(int hour, int minute, int second, partOfDayType part) : Clock(hour, minute, second)
+{
+    if (!validHour())
+    {
+        setTime(hour, minute, second);
+    }
+    partOfDay = part;
+}
+
+bool TwelveHrClock::validHour()
+{
+    return hr >= 1 && hr <= 12;
+}
+
 TwelveHrClock::partOfDayType TwelveHrClock::parts[2] = {
     partOfDayType::AM,
     partOfDayType::PM};

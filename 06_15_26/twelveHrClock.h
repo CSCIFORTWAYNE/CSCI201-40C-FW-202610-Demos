@@ -20,6 +20,7 @@ public:
     static std::string partToStr[2];
 
 private:
+    bool validHour();
     partOfDayType partOfDay;
 };
 
