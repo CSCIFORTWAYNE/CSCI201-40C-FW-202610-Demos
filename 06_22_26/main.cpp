@@ -7,6 +7,7 @@ void resetStream();
 Clock *makeClock();
 int inputHours();
 int inputMinutesOrSeconds(std::string part);
+void pointerParameters(int *&p, double *q);
 int main()
 {
 
@@ -42,6 +43,42 @@ int main()
     {
         std::cout << "They are the same time." << std::endl;
     }
+
+    int *number = new int;
+    *number = 25;
+    double *secondNumber = new double;
+    *secondNumber = 40.3;
+
+    pointerParameters(number, secondNumber);
+
+    int twoDArray[10][10]; // 10 rows and 10 columns
+    int **dynamic2DArray;
+    dynamic2DArray = new int *[10]; // create 10 rows
+    dynamic2DArray[0] = new int[3]; // create 3 columns for the first row
+    dynamic2DArray[1] = new int[7]; // create 7 columns in the second row
+    dynamic2DArray[3] = new int;    // row 3 has a single dynamic variable
+    Clock **clocks;
+    clocks = new Clock *[numNums];
+    for (int i = 0; i < numNums; i++)
+    {
+        clocks[i] = makeClock();
+    }
+
+    for (int i = 0; i < numNums; i++)
+    {
+        std::cout << clocks[i]->printTime() << std::endl;
+        delete clocks[i];
+    }
+    delete[] clocks;
+    delete[] x;
+    delete c1;
+    delete c2;
+    delete number;
+    delete secondNumber;
+    delete[] dynamic2DArray[0];
+    delete[] dynamic2DArray[1];
+    delete dynamic2DArray[3];
+    delete[] dynamic2DArray;
 
     return 0;
 }
@@ -98,6 +135,15 @@ int inputMinutesOrSeconds(std::string part)
         std::cout << std::endl;
     }
     return time;
+}
+void pointerParameters(int *&p, double *q)
+{
+    delete p;
+    p = new int();
+    *p = 37;
+    q = new double();
+    *q = 12.5;
+    delete q;
 }
 void resetStream()
 {
