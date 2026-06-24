@@ -1,5 +1,7 @@
 #include <iostream>
 #include <limits>
+#include <string>
+#include <algorithm>
 #include "movieTimes.h"
 
 // Module 3B(a): In-Class Activity
@@ -9,7 +11,9 @@ MovieTimes enterMovie();
 void resetStream();
 int inputHours();
 int inputMinutesOrSeconds(std::string part);
-
+TwelveHrClock::partOfDayType inputPartOfDay();
+TwelveHrClock *makeClock();
+void movie(MovieTimes m);
 int main()
 {
     int x = 45;
@@ -26,7 +30,10 @@ int main()
     xptr = nullptr;
     delete yptr;
     MovieTimes newMovie = enterMovie();
+    MovieTimes newMovie2 = enterMovie();
+    movie(newMovie);
     std::cout << newMovie.tostring() << std::endl;
+    std::cout << newMovie2.tostring() << std::endl;
     return 0;
 }
 
@@ -58,16 +65,56 @@ MovieTimes enterMovie()
     std::getline(std::cin, rating);
     std::cout << std::endl;
     MovieTimes theMovie(title, runtime, rating);
+    char more = 'y';
+    while (more == 'y')
+    {
+        TwelveHrClock *clock = makeClock();
+        theMovie.addTime(*clock);
+        delete clock;
+        std::cout << "Would you like to add another showtime? ";
+        std::cin >> more;
+        std::cout << std::endl;
+        more = tolower(more);
+    }
+
     return theMovie;
 }
 
-Clock *makeClock()
+TwelveHrClock::partOfDayType inputPartOfDay()
+{
+    std::string ampm;
+    std::cout << "Is it AM or PM? ";
+    std::cin >> ampm;
+    std::transform(ampm.begin(), ampm.end(), ampm.begin(), ::toupper);
+    while (ampm != "AM" && ampm != "PM")
+    {
+        std::cout << "Please enter AM or PM. ";
+
+        std::cin >> ampm;
+        std::transform(ampm.begin(), ampm.end(), ampm.begin(), ::toupper);
+    }
+    if (ampm == "AM")
+    {
+        return TwelveHrClock::partOfDayType::AM;
+    }
+    else
+    {
+
+        return TwelveHrClock::partOfDayType::PM;
+    }
+}
+
+TwelveHrClock *makeClock()
 {
     int hour = inputHours();
     int minute = inputMinutesOrSeconds("minutes");
-    int second = inputMinutesOrSeconds("seconds");
-    Clock *newClock = new Clock(hour, minute, second);
+    TwelveHrClock::partOfDayType part = inputPartOfDay();
+
+    TwelveHrClock *newClock = new TwelveHrClock(hour, minute, part);
     return newClock;
+}
+void movie(MovieTimes m)
+{
 }
 int inputHours()
 {

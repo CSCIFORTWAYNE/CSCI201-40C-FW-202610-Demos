@@ -12,7 +12,7 @@ public:
     };
     std::string printTime();
     void setTime(int hour, int minute, int second);
-    TwelveHrClock(int hour, int minute, int second, partOfDayType part);
+    TwelveHrClock(int hour, int minute, partOfDayType part, int second = 0);
     static partOfDayType parts[2]; /*  = {
          partofDayType::AM,
          partofDayType::PM

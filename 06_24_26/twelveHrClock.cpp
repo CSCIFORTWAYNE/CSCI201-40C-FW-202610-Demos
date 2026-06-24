@@ -29,7 +29,7 @@ void TwelveHrClock::setTime(int hour, int minute, int second)
     Clock::setTime(hour, minute, second);
 }
 
-TwelveHrClock::TwelveHrClock(int hour, int minute, int second, partOfDayType part) : Clock(hour, minute, second)
+TwelveHrClock::TwelveHrClock(int hour, int minute, partOfDayType part, int second) : Clock(hour, minute, second)
 {
     if (!validHour())
     {

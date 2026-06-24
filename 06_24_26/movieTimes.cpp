@@ -12,6 +12,11 @@ MovieTimes::MovieTimes(std::string t, int run, std::string rat)
     showTimes = nullptr;
     numTimes = 0;
 }
+MovieTimes::MovieTimes(const MovieTimes &movieToCopy)
+{
+    numTimes = 0;
+    copyMovie(movieToCopy);
+}
 std::string MovieTimes::tostring() const
 {
     std::ostringstream out;
@@ -50,4 +55,37 @@ void MovieTimes::addTime(TwelveHrClock timeAdd)
     }
     showTimes[numTimes - 1] = new TwelveHrClock(timeAdd);
     delete[] temp;
+}
+
+void MovieTimes::clearTimes()
+{
+    for (int i = 0; i < numTimes; i++)
+    {
+        delete showTimes[i];
+    }
+    delete[] showTimes;
+    showTimes = nullptr;
+}
+
+MovieTimes::~MovieTimes()
+{
+    clearTimes();
+}
+
+void MovieTimes::copyMovie(const MovieTimes &movieToCopy)
+{
+    title = movieToCopy.title;
+    runtime = movieToCopy.runtime;
+    rating = movieToCopy.rating;
+    if (numTimes > 0)
+    {
+        clearTimes();
+    }
+    numTimes = movieToCopy.numTimes;
+    showTimes = new TwelveHrClock *[numTimes];
+    for (int i = 0; i < numTimes; i++)
+    {
+        // showTimes[i] = movieToCopy.showTimes[i]; //bad shallow copy
+        showTimes[i] = new TwelveHrClock(*(movieToCopy.showTimes[i]));
+    }
 }
