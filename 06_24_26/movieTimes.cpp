@@ -17,6 +17,14 @@ MovieTimes::MovieTimes(const MovieTimes &movieToCopy)
     numTimes = 0;
     copyMovie(movieToCopy);
 }
+const MovieTimes &MovieTimes::operator=(const MovieTimes &movieToCopy)
+{
+    if (this != &movieToCopy)
+    {
+        copyMovie(movieToCopy);
+    }
+    return *this;
+}
 std::string MovieTimes::tostring() const
 {
     std::ostringstream out;

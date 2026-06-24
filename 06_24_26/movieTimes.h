@@ -13,6 +13,7 @@ class MovieTimes
 public:
     MovieTimes(std::string title, int runtime, std::string rating);
     MovieTimes(const MovieTimes &movieToCopy);
+    const MovieTimes &operator=(const MovieTimes &movieToCopy);
     std::string tostring() const;
     std::string getTitle() const;
     int getRuntime() const;

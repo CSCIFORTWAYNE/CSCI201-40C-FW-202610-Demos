@@ -2,6 +2,7 @@
 #include <limits>
 #include <string>
 #include <algorithm>
+#include <memory>
 #include "movieTimes.h"
 
 // Module 3B(a): In-Class Activity
@@ -12,7 +13,7 @@ void resetStream();
 int inputHours();
 int inputMinutesOrSeconds(std::string part);
 TwelveHrClock::partOfDayType inputPartOfDay();
-TwelveHrClock *makeClock();
+std::shared_ptr<TwelveHrClock> makeClock();
 void movie(MovieTimes m);
 int main()
 {
@@ -68,9 +69,9 @@ MovieTimes enterMovie()
     char more = 'y';
     while (more == 'y')
     {
-        TwelveHrClock *clock = makeClock();
+        std::shared_ptr<TwelveHrClock> clock = makeClock();
         theMovie.addTime(*clock);
-        delete clock;
+
         std::cout << "Would you like to add another showtime? ";
         std::cin >> more;
         std::cout << std::endl;
@@ -104,13 +105,13 @@ TwelveHrClock::partOfDayType inputPartOfDay()
     }
 }
 
-TwelveHrClock *makeClock()
+std::shared_ptr<TwelveHrClock> makeClock()
 {
     int hour = inputHours();
     int minute = inputMinutesOrSeconds("minutes");
     TwelveHrClock::partOfDayType part = inputPartOfDay();
 
-    TwelveHrClock *newClock = new TwelveHrClock(hour, minute, part);
+    std::shared_ptr<TwelveHrClock> newClock = std::make_shared<TwelveHrClock>(hour, minute, part);
     return newClock;
 }
 void movie(MovieTimes m)
