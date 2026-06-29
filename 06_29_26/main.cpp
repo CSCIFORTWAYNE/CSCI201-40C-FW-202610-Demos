@@ -7,18 +7,20 @@
 void printPerson(Person *p);
 MovieTimes enterMovie();
 void resetStream();
-int inputInt(std::string prompt, std::string error, bool (*valid)(int, int, int), int low, int high);
+int inputInt(std::string prompt, std::string error, bool (*valid)(int, int, int), int low = 0, int high = 0);
 int inputHours();
 int inputMinutesOrSeconds(std::string part);
 TwelveHrClock::partOfDayType inputPartOfDay();
 Clock *makeClock();
 bool isIntInRange(int num, int low, int high);
+bool isAorB(int num, int a, int b);
 
 int main()
 {
     Employee emp("Harry Potter", 13, "555-1212", "hpotter@email.com", 23000.21, "2021-12-12");
     Person per("Charlie Brown", 11, "555-1234", "cbrown@email.com");
     printPerson(&emp);
+    makeClock();
     return 0;
 }
 
@@ -33,7 +35,7 @@ int inputInt(std::string prompt, std::string error, bool (*valid)(int, int, int)
     std::cout << prompt;
     std::cin >> num;
     std::cout << std::endl;
-    while (!std::cin || valid(num, low, high))
+    while (!std::cin || !valid(num, low, high))
     {
         if (!std::cin)
         {
@@ -171,4 +173,9 @@ void resetStream()
 bool isIntInRange(int num, int low, int high)
 {
     return num >= low && num <= high;
+}
+
+bool isAorB(int num, int a, int b)
+{
+    return num == a || num == b;
 }
