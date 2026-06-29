@@ -12,7 +12,7 @@ public:
     void setName(std::string name);
     int getAge() const;
     void setAge(int a);
-    std::string toString() const;
+    virtual std::string toString() const;
     std::string getPhone() const;
     std::string getEmail() const;
     void setPhone(std::string p);
