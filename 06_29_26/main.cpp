@@ -25,7 +25,7 @@ int main()
     shows[0] = enterMovie();
     shows[1] = new ShowTimes("Clue the musical");
     TwelveHrClock t(4, 0, TwelveHrClock::partOfDayType::PM);
-    Clock t1(11, 45);
+    TwentyFourHrClock t1(11, 45);
     shows[1]->addTime(t);
     shows[1]->addTime(t1);
 
@@ -140,7 +140,7 @@ Clock *makeClock()
     }
     else
     {
-        newClock = new Clock(hour, minute);
+        newClock = new TwentyFourHrClock(hour, minute);
     }
 
     return newClock;

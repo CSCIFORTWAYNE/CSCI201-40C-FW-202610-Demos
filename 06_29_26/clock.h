@@ -8,15 +8,14 @@ class Clock
 {
 
 public:
-    void setTime(int hour, int minute, int second);
+    virtual void setTime(int hour, int minute, int second) = 0;
     void getTime(int &hour, int &minute, int &second) const;
     virtual std::string printTime() const;
     void incrementSeconds();
     void incrementMinutes();
-    void incrementHours();
+    virtual void incrementHours() = 0;
     bool equalTime(const Clock &otherClock) const;
-    Clock(int hour, int minute, int second = 0);
-    virtual Clock *copyClock() const;
+    virtual Clock *copyClock() const = 0;
 
 protected:
     int hr;

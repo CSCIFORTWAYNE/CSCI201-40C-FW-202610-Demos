@@ -26,10 +26,11 @@ void TwelveHrClock::setTime(int hour, int minute, int second)
     {
         hour = 12;
     }
-    Clock::setTime(hour, minute, second);
+    min = abs(minute) % 60;
+    sec = abs(second) % 60;
 }
 
-TwelveHrClock::TwelveHrClock(int hour, int minute, partOfDayType part, int second) : Clock(hour, minute, second)
+TwelveHrClock::TwelveHrClock(int hour, int minute, partOfDayType part, int second)
 {
     if (!validHour())
     {
@@ -51,4 +52,25 @@ std::string TwelveHrClock::partToStr[2] = {"AM", "PM"};
 Clock *TwelveHrClock::copyClock() const
 {
     return new TwelveHrClock(*this);
+}
+
+void TwelveHrClock::incrementHours()
+{
+    hr++;
+    if (hr == 12)
+    {
+        if (partOfDay == TwelveHrClock::partOfDayType::AM)
+        {
+            partOfDay = TwelveHrClock::partOfDayType::PM;
+        }
+        else
+        {
+            partOfDay = TwelveHrClock::partOfDayType::AM;
+        }
+    }
+
+    if (hr > 12)
+    {
+        hr = 1;
+    }
 }

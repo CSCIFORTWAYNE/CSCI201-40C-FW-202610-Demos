@@ -1,7 +1,7 @@
 #ifndef SHOW_H
 #define SHOW_H
 #include "twelveHrClock.h"
-
+#include "twentyfourHrClock.h"
 #include <iostream>
 #include <sstream>
 #include <iomanip>
