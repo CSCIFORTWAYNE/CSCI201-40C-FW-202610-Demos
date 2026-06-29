@@ -1,20 +1,20 @@
 #include "movieTimes.h"
 
-MovieTimes::MovieTimes(std::string t, int run, std::string rat)
+MovieTimes::MovieTimes(std::string t, int run, std::string rat) : ShowTimes(t)
 {
-    title = t;
+
     if (run <= 0)
     {
         run = 1;
     }
     runtime = run;
     rating = rat;
-    showTimes = nullptr;
-    numTimes = 0;
+    dynamicData = new int(7);
 }
-MovieTimes::MovieTimes(const MovieTimes &movieToCopy)
+MovieTimes::MovieTimes(const MovieTimes &movieToCopy) : ShowTimes(movieToCopy.title)
 {
     numTimes = 0;
+    dynamicData = new int(7);
     copyMovie(movieToCopy);
 }
 const MovieTimes &MovieTimes::operator=(const MovieTimes &movieToCopy)
@@ -37,11 +37,6 @@ std::string MovieTimes::tostring() const
     return out.str();
 }
 
-std::string MovieTimes::getTitle() const
-{
-    return title;
-}
-
 int MovieTimes::getRuntime() const
 {
     return runtime;
@@ -52,32 +47,10 @@ std::string MovieTimes::getRating() const
     return rating;
 }
 
-void MovieTimes::addTime(const Clock &timeAdd)
-{
-    numTimes++;
-    Clock **temp = showTimes;
-    showTimes = new Clock *[numTimes];
-    for (int i = 0; i < numTimes - 1; i++)
-    {
-        showTimes[i] = temp[i]; // acceptable shallow copy
-    }
-    showTimes[numTimes - 1] = timeAdd.copyClock();
-    delete[] temp;
-}
-
-void MovieTimes::clearTimes()
-{
-    for (int i = 0; i < numTimes; i++)
-    {
-        delete showTimes[i];
-    }
-    delete[] showTimes;
-    showTimes = nullptr;
-}
-
 MovieTimes::~MovieTimes()
 {
-    clearTimes();
+
+    delete dynamicData;
 }
 
 void MovieTimes::copyMovie(const MovieTimes &movieToCopy)

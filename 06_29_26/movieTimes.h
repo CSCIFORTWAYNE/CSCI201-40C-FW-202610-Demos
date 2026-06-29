@@ -1,6 +1,7 @@
 #ifndef MOVIE_H
 #define MOVIE_H
 #include "twelveHrClock.h"
+#include "showTimes.h"
 
 #include <iostream>
 #include <sstream>
@@ -8,26 +9,23 @@
 #include <string>
 #include <limits>
 
-class MovieTimes
+class MovieTimes : public ShowTimes
 {
 public:
     MovieTimes(std::string title, int runtime, std::string rating);
     MovieTimes(const MovieTimes &movieToCopy);
     const MovieTimes &operator=(const MovieTimes &movieToCopy);
     std::string tostring() const;
-    std::string getTitle() const;
+
     int getRuntime() const;
     std::string getRating() const;
-    void addTime(const Clock &timeAdd);
-    void clearTimes();
+
     ~MovieTimes();
 
 private:
-    std::string title;
     int runtime;
     std::string rating;
-    Clock **showTimes;
-    int numTimes;
+    int *dynamicData;
     void copyMovie(const MovieTimes &movieToCopy);
 };
 #endif

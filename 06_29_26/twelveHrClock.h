@@ -10,7 +10,7 @@ public:
         AM,
         PM
     };
-    std::string printTime();
+    std::string printTime() const;
     void setTime(int hour, int minute, int second);
     TwelveHrClock(int hour, int minute, partOfDayType part, int second = 0);
     virtual Clock *copyClock() const;

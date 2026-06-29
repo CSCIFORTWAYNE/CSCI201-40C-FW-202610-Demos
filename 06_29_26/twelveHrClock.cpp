@@ -1,6 +1,6 @@
 #include "twelveHrClock.h"
 
-std::string TwelveHrClock::printTime()
+std::string TwelveHrClock::printTime() const
 {
     std::ostringstream out;
     out << Clock::printTime() << " ";

@@ -5,7 +5,7 @@
 #include <algorithm>
 
 void printPerson(Person *p);
-MovieTimes enterMovie();
+MovieTimes *enterMovie();
 void resetStream();
 int inputInt(std::string prompt, std::string error, bool (*valid)(int, int, int), int low = 0, int high = 0);
 int inputHours();
@@ -14,13 +14,25 @@ TwelveHrClock::partOfDayType inputPartOfDay();
 Clock *makeClock();
 bool isIntInRange(int num, int low, int high);
 bool isAorB(int num, int a, int b);
+bool isGTX(int num, int low, int high = 0);
 
 int main()
 {
     Employee emp("Harry Potter", 13, "555-1212", "hpotter@email.com", 23000.21, "2021-12-12");
     Person per("Charlie Brown", 11, "555-1234", "cbrown@email.com");
     printPerson(&emp);
-    makeClock();
+    ShowTimes *shows[2];
+    shows[0] = enterMovie();
+    shows[1] = new ShowTimes("Clue the musical");
+    TwelveHrClock t(4, 0, TwelveHrClock::partOfDayType::PM);
+    Clock t1(11, 45);
+    shows[1]->addTime(t);
+    shows[1]->addTime(t1);
+
+    std::cout << shows[0]->tostring() << std::endl;
+    std::cout << shows[1]->tostring() << std::endl;
+    delete shows[0];
+    delete shows[1];
     return 0;
 }
 
@@ -46,10 +58,11 @@ int inputInt(std::string prompt, std::string error, bool (*valid)(int, int, int)
         std::cin >> num;
         std::cout << std::endl;
     }
+
     return num;
 }
 
-MovieTimes enterMovie()
+MovieTimes *enterMovie()
 {
     std::string title;
     std::string rating;
@@ -57,32 +70,19 @@ MovieTimes enterMovie()
     std::cout << "Enter the movie title: ";
     std::getline(std::cin >> std::ws, title);
     std::cout << std::endl;
+    runtime = inputInt("Enter the runtime in minutes: ", "That is not a valid runtime. Please enter a number greater than 0.", isGTX);
 
-    std::cout << "Enter the runtime in minutes: ";
-    std::cin >> runtime;
-    std::cout << std::endl;
-    while (!std::cin || runtime < 1)
-    {
-        if (!std::cin)
-        {
-            resetStream();
-        }
-        std::cout << "That is not a valid runtime. Please enter a number greater than 0." << std::endl;
-        std::cout << "Enter the runtime in minutes: ";
-        std::cin >> runtime;
-        std::cout << std::endl;
-    }
     std::cout << "Enter the rating: ";
     std::cin >> std::ws;
     std::getline(std::cin, rating);
     std::cout << std::endl;
-    MovieTimes theMovie(title, runtime, rating);
+    MovieTimes *theMovie = new MovieTimes(title, runtime, rating);
     char more = 'y';
     while (more == 'y')
     {
         Clock *clock = makeClock();
-        theMovie.addTime(*clock);
-
+        theMovie->addTime(*clock);
+        delete clock;
         std::cout << "Would you like to add another showtime? ";
         std::cin >> more;
         std::cout << std::endl;
@@ -118,12 +118,32 @@ TwelveHrClock::partOfDayType inputPartOfDay()
 
 Clock *makeClock()
 {
-    int hour = inputInt("Enter the hour on the clock ", "That is not a valid hour. Please enter an hour between 1 and 12.", isIntInRange, 1, 12);
-    int minute = inputMinutesOrSeconds("minutes");
-    TwelveHrClock::partOfDayType part = inputPartOfDay();
+    int hour;
+    int minute;
+    int clockType;
+    Clock *newClock = nullptr;
+    std::string hourPrompt = "Enter the hour: ";
+    clockType = inputInt("Is the time in 12 or 24 hours? ", "Please enter 12 or 24", isAorB, 12, 24);
+    if (clockType == 12)
+    {
+        hour = inputInt(hourPrompt, "That is not a valid hour. Please enter an hour between 1 and 12.", isIntInRange, 1, 12);
+    }
+    else
+    {
+        hour = inputInt(hourPrompt, "That is not a valid hour. Please enter an hour between 0 and 23.", isIntInRange, 0, 23);
+    }
+    minute = inputInt("Enter the minutes: ", "That is not valid minutes. Please enter a number between 0 and 59", isIntInRange, 0, 59);
+    if (clockType == 12)
+    {
+        TwelveHrClock::partOfDayType part = inputPartOfDay();
+        newClock = new TwelveHrClock(hour, minute, part);
+    }
+    else
+    {
+        newClock = new Clock(hour, minute);
+    }
 
-    // Clock* newClock = (hour, minute, part);
-    return nullptr;
+    return newClock;
 }
 int inputHours()
 {
@@ -178,4 +198,9 @@ bool isIntInRange(int num, int low, int high)
 bool isAorB(int num, int a, int b)
 {
     return num == a || num == b;
+}
+
+bool isGTX(int num, int low, int high)
+{
+    return num > low;
 }

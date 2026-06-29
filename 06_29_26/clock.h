@@ -15,7 +15,7 @@ public:
     void incrementMinutes();
     void incrementHours();
     bool equalTime(const Clock &otherClock) const;
-    Clock(int hour, int minute, int second);
+    Clock(int hour, int minute, int second = 0);
     virtual Clock *copyClock() const;
 
 protected:
