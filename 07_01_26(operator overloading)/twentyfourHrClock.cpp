@@ -65,3 +65,42 @@ bool TwentyFourHrClock::operator>(const TwentyFourHrClock &rightHandClock) const
     }
     return greaterThan;
 }
+
+TwentyFourHrClock TwentyFourHrClock::operator+(int minutesToAdd)
+{
+    TwentyFourHrClock newClock = *this;
+    for (int i = 0; i < minutesToAdd; i++)
+    {
+        newClock.incrementMinutes();
+    }
+    return newClock;
+}
+
+bool operator<(const TwentyFourHrClock &leftHandClock, const TwentyFourHrClock &rightHandClock)
+{
+    bool lessThan = true;
+    if (rightHandClock.hr < leftHandClock.hr)
+    {
+        lessThan = false;
+    }
+    else if (rightHandClock.hr == leftHandClock.hr)
+    {
+        if (rightHandClock.min < leftHandClock.min)
+        {
+            lessThan = false;
+        }
+        else if (rightHandClock.min == leftHandClock.min)
+        {
+            if (rightHandClock.sec <= leftHandClock.sec)
+            {
+                lessThan = false;
+            }
+        }
+    }
+    return lessThan;
+}
+
+TwentyFourHrClock operator+(int minutesToAdd, TwentyFourHrClock clock)
+{
+    return clock + minutesToAdd;
+}
