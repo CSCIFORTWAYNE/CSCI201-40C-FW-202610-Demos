@@ -76,6 +76,19 @@ TwentyFourHrClock TwentyFourHrClock::operator+(int minutesToAdd)
     return newClock;
 }
 
+TwentyFourHrClock TwentyFourHrClock::operator++()
+{
+    this->incrementSeconds();
+    return *this;
+}
+
+TwentyFourHrClock TwentyFourHrClock::operator++(int)
+{
+    TwentyFourHrClock temp = *this;
+    this->incrementSeconds();
+    return temp;
+}
+
 bool operator<(const TwentyFourHrClock &leftHandClock, const TwentyFourHrClock &rightHandClock)
 {
     bool lessThan = true;
@@ -103,4 +116,53 @@ bool operator<(const TwentyFourHrClock &leftHandClock, const TwentyFourHrClock &
 TwentyFourHrClock operator+(int minutesToAdd, TwentyFourHrClock clock)
 {
     return clock + minutesToAdd;
+}
+
+std::istream &operator>>(std::istream &in, TwentyFourHrClock &clock)
+{
+    in >> clock.hr;
+    in >> clock.min;
+    in >> clock.sec;
+    if (clock.hr < 0 || clock.hr > 23 || clock.min < 0 || clock.min > 59 || clock.sec < 0 || clock.sec > 59)
+    {
+        clock.hr = 0;
+        clock.min = 0;
+        clock.sec = 0;
+        in.setstate(std::ios::failbit);
+    }
+    return in;
+}
+
+TwentyFourHrClock operator--(TwentyFourHrClock &clock)
+{
+    clock.sec--;
+    if (clock.sec < 0)
+    {
+        clock.sec = 59;
+        clock.min--;
+        if (clock.min < 0)
+        {
+            clock.min = 59;
+            clock.hr--;
+            if (clock.hr < 0)
+            {
+                clock.hr = 23;
+            }
+        }
+    }
+
+    return clock;
+}
+
+TwentyFourHrClock operator--(TwentyFourHrClock &clock, int)
+{
+    TwentyFourHrClock temp = clock;
+    --clock;
+    return temp;
+}
+
+std::ostream &operator<<(std::ostream &out, const TwentyFourHrClock &clock)
+{
+    out << clock.printTime();
+    return out;
 }

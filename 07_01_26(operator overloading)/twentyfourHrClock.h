@@ -13,5 +13,11 @@ public:
     friend bool operator<(const TwentyFourHrClock &leftHandClock, const TwentyFourHrClock &rightHandClock);
     TwentyFourHrClock operator+(int minutesToAdd);
     friend TwentyFourHrClock operator+(int minutesToAdd, TwentyFourHrClock clock);
+    friend std::ostream &operator<<(std::ostream &out, const TwentyFourHrClock &clock);
+    friend std::istream &operator>>(std::istream &in, TwentyFourHrClock &clock);
+    TwentyFourHrClock operator++();
+    TwentyFourHrClock operator++(int);
+    friend TwentyFourHrClock operator--(TwentyFourHrClock &clock);
+    friend TwentyFourHrClock operator--(TwentyFourHrClock &clock, int);
 };
 #endif
