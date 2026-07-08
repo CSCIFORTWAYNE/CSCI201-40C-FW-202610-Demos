@@ -41,7 +41,7 @@ void TwelveHrClock::setHour(int hour)
 
     if (hour < 1 || hour > 12)
     {
-        throw std::invalid_argument("The hour (" + std::to_string(hour) + ") is invalid.");
+        throw Invalid_Hour(hour, 1, 12);
     }
 
     hr = hour;

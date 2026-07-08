@@ -10,7 +10,7 @@ void TwentyFourHrClock::setHour(int hour)
 {
     if (hour < 0 || hour > 23)
     {
-        throw std::invalid_argument("The hour (" + std::to_string(hour) + ") is invalid.");
+        throw Invalid_Hour(hour, 0, 23);
     }
     hr = hour;
 }
