@@ -1,5 +1,8 @@
 #include <iostream>
 #include <vector>
+#include <random>
+#include "twentyFourHrClock.h"
+#include "twelveHrClock.h"
 int inputInt(std::string prompt, std::string error, bool (*valid)(int, int, int), int low = 0, int high = 0);
 bool isIntInRange(int num, int low, int high);
 bool isAorB(int num, int a, int b);
@@ -9,12 +12,28 @@ int main()
     std::vector<int> list;
     list.push_back(5);
     // list[3] = 7;
-
+    TwentyFourHrClock clock;
+    // std::cout << clock << std::endl;
+    // clock = clock + 10;
+    // std::cout << clock << std::endl;
+    // clock = 10 + clock;
+    std::cout << clock << std::endl;
+    TwelveHrClock clock12;
+    // clock12++;
+    if (clock12 == clock)
+    {
+        std::cout << "The clocks have the same time" << std::endl;
+    }
+    std::random_device rd;
+    std::default_random_engine generator(rd());
+    std::uniform_int_distribution distribution(1, 100);
     try
     {
         int x = inputInt("enter a number ", "error", isGTX);
         std::cout << x << std::endl;
-        list.at(3) = x;
+        // list.at(3) = x;
+        TwentyFourHrClock newclock(distribution(generator), distribution(generator), distribution(generator));
+        std::cout << newclock << std::endl;
     }
 
     catch (int n)
@@ -29,6 +48,10 @@ int main()
         }
     }
     catch (std::out_of_range e)
+    {
+        std::cout << e.what() << std::endl;
+    }
+    catch (std::invalid_argument e)
     {
         std::cout << e.what() << std::endl;
     }
