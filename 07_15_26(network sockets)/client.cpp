@@ -14,6 +14,8 @@
 #include <errno.h>
 #include <bits/stdc++.h>
 
+void resetStream();
+
 int main(int argc, char *argv[])
 {
     addrinfo hints;
@@ -51,6 +53,32 @@ int main(int argc, char *argv[])
         }
         inet_ntop(servInfo->ai_family, (struct sockaddr_in *)servInfo->ai_addr, s, sizeof(s));
         std::cout << "Client: connected to " << s << std::endl;
+        int input = 0;
+        std::cout << "Enter the starting number: ";
+        std::cin >> input;
+        while (!std::cin)
+        {
+            resetStream();
+            std::cout << "Enter the starting number: ";
+            std::cin >> input;
+        }
+        u_int32_t val = static_cast<u_int32_t>(input);
+        val = htonl(val);
+        rv = send(sock, &val, sizeof(val), 0);
+        if (rv == -1)
+        {
+            close(sock);
+            throw std::logic_error("Client is unable to send.");
+        }
+        rv = recv(sock, &val, sizeof(val), 0);
+        if (rv == -1)
+        {
+            close(sock);
+            throw std::logic_error("Client is unable to receive.");
+        }
+        val = ntohl(val);
+        std::cout << "Server Response: " << val << std::endl;
+
         close(sock);
     }
     catch (const std::runtime_error &e)
@@ -63,4 +91,10 @@ int main(int argc, char *argv[])
     }
 
     return 0;
+}
+
+void resetStream()
+{
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
