@@ -1,4 +1,3 @@
-#include "suit.h"
 #include <iostream>
 #include <string>
 #include <map>
@@ -15,8 +14,6 @@
 #include <bits/stdc++.h>
 
 const int BACKLOG = 10;
-
-std::string getFormatStr(suitType suit);
 
 int main(int argc, char *argv[])
 {
@@ -77,11 +74,9 @@ int main(int argc, char *argv[])
             {
                 val = ntohl(val);
                 std::cout << "receiving: " << val << std::endl;
-                suitType suit = static_cast<suitType>(val);
-                std::string response = getFormatStr(suit);
-                val = htonl(response.length());
+                val++;
+                val = htonl(val);
                 rv = send(clientfd, &val, sizeof(val), 0);
-                rv = send(clientfd, response.c_str(), response.length(), 0);
             }
             close(clientfd);
         }
@@ -96,13 +91,4 @@ int main(int argc, char *argv[])
     }
 
     return 0;
-}
-// https://en.wikipedia.org/wiki/ANSI_escape_code
-std::string getFormatStr(suitType suit)
-{
-    static std::map<suitType, std::string> suitColors = {{suitType::HEARTS, "\033[1m\033[107;31m"},
-                                                         {suitType::DIAMONDS, "\033[1m\033[107;31m"},
-                                                         {suitType::CLUBS, "\033[1m\033[38;5;212m"},
-                                                         {suitType::SPADES, "\033[1m\033[107;30m"}};
-    return suitColors[suit];
 }
