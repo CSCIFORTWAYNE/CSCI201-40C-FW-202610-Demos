@@ -16,6 +16,7 @@ public:
 private:
 	AutoScroller scroller;
 	WithDrinkFormLayout<ParentCtrl> scroller_view;
+	Option flavor[NUM_FLAV];
 };
 
 #endif
