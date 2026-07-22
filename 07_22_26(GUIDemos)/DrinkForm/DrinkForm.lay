@@ -1,0 +1,8 @@
+LAYOUT(DrinkFormLayout, 716, 400)
+	ITEM(Upp::Switch, size, SetLabel(t_("Small\nMedium\nLarge")).LeftPosZ(28, 60).TopPosZ(28, 52))
+	ITEM(Upp::LabelBox, sizeLbl, SetLabel(t_("Size")).LeftPosZ(20, 76).TopPosZ(12, 68))
+END_LAYOUT
+
+LAYOUT(MainAppWindow, 720, 420)
+END_LAYOUT
+

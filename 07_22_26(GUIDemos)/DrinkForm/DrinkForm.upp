@@ -1,0 +1,15 @@
+uses
+	CtrlLib,
+	AutoScroller;
+
+file
+	drink.cpp,
+	drink.h,
+	DrinkForm.cpp,
+	DrinkForm.h,
+	main.cpp,
+	DrinkForm.lay;
+
+mainconfig
+	"" = "GUI";
+

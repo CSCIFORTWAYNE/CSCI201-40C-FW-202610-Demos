@@ -1,0 +1,5 @@
+LAYOUT(sample, 716, 356)
+	ITEM(Upp::DocEdit, dv___0, LeftPosZ(356, 332).TopPosZ(16, 188))
+	ITEM(Upp::Button, bigbutton, SetLabel(t_("Big Button")).SetFont(Upp::SerifZ(25).Bold()).LeftPosZ(32, 204).TopPosZ(24, 104))
+END_LAYOUT
+

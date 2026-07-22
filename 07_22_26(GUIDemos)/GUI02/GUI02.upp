@@ -2,6 +2,7 @@ uses
 	CtrlLib;
 
 file
+	sample.lay,
 	main.cpp;
 
 mainconfig
